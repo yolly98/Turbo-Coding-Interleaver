@@ -7,14 +7,13 @@ entity counter is
         clk : in std_logic;
         rst : in std_logic;
         en : in std_logic;
-        d : in std_logic_vector(Nbit-1 downto 0);
         q : out std_logic_vector(Nbit-1 downto 0)
     );
 end counter;
 
 architecture struct of counter is
         component RCA is
-            generic (Nbit : positive := 8);
+            generic (Nbit : positive := Nbit);
             port(
                 a : in std_logic_vector(Nbit-1 downto 0);
                 b : in std_logic_vector(Nbit-1 downto 0);
@@ -25,7 +24,7 @@ architecture struct of counter is
         end component;
 
         component dff_n is
-            generic (N : positive :=8);
+            generic (N : positive :=Nbit);
             port(
                 clk : in std_logic;
                 en : in std_logic;
@@ -41,9 +40,9 @@ architecture struct of counter is
     begin        
         ADDER : RCA 
             port map(
-                a => d,
-                b => b_s,
-                cin => '0',
+                a =>  b_s,
+                b => (others => '0'),
+                cin => '1',
                 s => sum_s,
                 cout => cout_s
             );
