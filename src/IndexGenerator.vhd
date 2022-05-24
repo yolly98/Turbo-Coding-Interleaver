@@ -6,15 +6,15 @@ entity IndexGenerator is
 
     port(
         i : in std_logic_vector(Nbit-1 downto 0);
-        j : out std_logic_vector(Nbit-1 downto 0);
+        j : out std_logic_vector(Nbit-1 downto 0)
     );
 
 end IndexGenerator;
 
-architecture beh of IndexGenerator is
+architecture rtl of IndexGenerator is
 
     component RCA is
-        generic (Nbit : natural := 10)
+        generic (Nbit : natural := 10);
         port(
             a : in std_logic_vector(Nbit-1 downto 0);
             b : in std_logic_vector(Nbit-1 downto 0);
@@ -25,26 +25,34 @@ architecture beh of IndexGenerator is
         );
     end component;
 
-    signal coutToRCA : std_logic_vector(11 downto 0);
-    
-    begin:
+    signal aRCA1 : std_logic_vector(Nbit-1 downto 0);
+    signal sRCA1 : std_logic_vector(Nbit-1 downto 0);
+    signal coutRCA1 : std_logic;
+    signal aRCA2 : std_logic_vector(Nbit downto 0);
+    signal sRCA2 : std_logic_vector(Nbit downto 0);
+
+    begin
         RCA1 : RCA
             generic map(Nbit => 10)
             port map(
-                a => i(Nbit-1 downto 1) & "0";
-                b => i;
-                cin => "0";
-                s => coutToRCA(9 downto 0);
-                cout => coutToRCA(10);
+                a => aRCA1,
+                b => i,
+                cin => '0',
+                s => sRCA1,
+                cout => coutRCA1
             );
         
         RCA2 : RCA
             generic map(Nbit => 11)
             port map(
-                a => coutToRCA;
-                b => "00000101101";
-                cin => "0";
-                s => j;
+                a => aRCA2,
+                b => "00000101101",
+                cin => '0',
+                s => sRCA2
             );
 
-end beh;
+        aRCA1 <= i(Nbit-2 downto 0) & '0';
+        aRCA2 <= coutRCA1 & sRCA1;
+        j <= sRCA2(Nbit-1 downto 0);
+
+end rtl;
