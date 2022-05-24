@@ -14,7 +14,7 @@ end IndexGenerator;
 architecture rtl of IndexGenerator is
 
     component RCA is
-        generic (Nbit : natural := 10);
+        generic (Nbit : positive := 10);
         port(
             a : in std_logic_vector(Nbit-1 downto 0);
             b : in std_logic_vector(Nbit-1 downto 0);

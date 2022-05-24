@@ -15,7 +15,7 @@ architecture beh of IndexGenerator_tb is
     signal end_sim : std_logic := '1';
 
     component IndexGenerator is
-        generic(Nbit : natural := 10);
+        generic(Nbit : positive := 10);
         port(
             i : in std_logic_vector(Nbit-1 downto 0);
             j : out std_logic_vector(Nbit-1 downto 0)
