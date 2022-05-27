@@ -23,7 +23,7 @@ architecture struct of counter is
             );
         end component;
 
-        component dff_n is
+        component dff_n_counter is
             generic (N : positive :=Nbit);
             port(
                 clk : in std_logic;
@@ -47,7 +47,7 @@ architecture struct of counter is
                 cout => cout_s
             );
 
-        REG : dff_n
+        REG : dff_n_counter
             port map(
                 clk => clk,
                 rst_n => rst,

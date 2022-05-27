@@ -122,7 +122,6 @@ architecture rtl of Interleaver is
                 q => y
             );
 
-
         r2_en <= count_out(0) and count_out(1) and count_out(2) and count_out(3) and count_out(4) and count_out(5) and count_out(6) and count_out(7) and count_out(8) and count_out(9);
         out_mux <= r2_out(to_integer(unsigned(j_mux)));
 

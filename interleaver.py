@@ -63,22 +63,25 @@ print("")
 print("______________________________________________")
 print("[REUSLTS]")
 
-result = filecmp.cmp('ModelSim/output_py.txt', 'ModelSim/output_vhdl.txt')
-print("compere resuts: ", end="")
-print(result)
+print("compere resuts... ")
 
-if(not result):
-    output_py = open("ModelSim/output_py.txt", "r")
-    output_vhdl = open("ModelSim/output_vhdl.txt", "r")
-    for i in range(0,1024):
-        bit1 = output_py.readline().strip()
-        bit2 = output_vhdl.readline().strip()
-        
-        if(bit1 != bit2):
-            print("[line " + str(i) + "] -> (" + bit1 + ", " + bit2 +")")
+output_py = open("ModelSim/output_py.txt", "r")
+output_vhdl = open("ModelSim/output_vhdl.txt", "r")
+error = 0
+for i in range(0,1024):
+    bit1 = output_py.readline().strip()
+    bit2 = output_vhdl.readline().strip()
+    
+    if(bit1 != bit2):
+        print("[line " + str(i) + "] -> (" + bit1 + ", " + bit2 +")")
+        error += 1
+output_py.close()
+output_vhdl.close()
 
-    output_py.close()
-    output_vhdl.close()
+if(error == 0):
+    print("[+] 0 errors")
+else:
+    print("[-] " + str(error) + "errors")
 
 print("________________________________________________")
 

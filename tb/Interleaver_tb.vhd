@@ -19,6 +19,7 @@ architecture beh of Interleaver_tb is
     signal y_tb : std_logic;
     signal clk_tb : std_logic := '0';
     signal rst_tb : std_logic := '0';
+    signal rst_tb_counter : std_logic := '0';
     signal end_sim : std_logic := '1';
 
     component Interleaver is
@@ -34,6 +35,7 @@ architecture beh of Interleaver_tb is
     begin
         clk_tb <= ((not clk_tb) and end_sim ) after T_CLK/2;
         rst_tb <= '1' after T_RESET;
+        
         file_open(INPUT_FILE, "input.txt", read_mode);
         file_open(OUTPUT_FILE, "output_vhdl.txt", write_mode);
 
@@ -70,12 +72,12 @@ architecture beh of Interleaver_tb is
                         read(input_line, input_bit);
                         x_tb <= input_bit;
 
-                        if(t >= 1024 + 2) then
+                        if(t >= 1024 + 4) then
                         write(output_line, y_tb);
                         writeline(OUTPUT_FILE, output_line);
                         end if;
 
-                        if(t = 1024*2 + 2) then
+                        if(t = 1024*2 + 4) then
                             end_sim <= '0';
                             file_close(INPUT_FILE);
                             file_close(OUTPUT_FILE);
