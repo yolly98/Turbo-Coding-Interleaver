@@ -75,15 +75,15 @@ architecture rtl of Interleaver is
                     clk => clk,
                     rst => rst,
                     d => r1_out,
-                    q => q_s(i)
+                    q => q_s(1023-i)
                 );
                 end generate FIRST;
             INTERNAL:if i > 0 generate
                 SRI: DFC port map(
                     clk => clk,
                     rst => rst,
-                    d => q_s(i-1),
-                    q => q_s(i)
+                    d => q_s(1023-(i-1)),
+                    q => q_s(1023-i)
                 );
                 end generate INTERNAL;
         end generate SHIFT;
