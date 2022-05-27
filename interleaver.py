@@ -1,6 +1,7 @@
 from contextlib import nullcontext
 import filecmp
 import random
+import re
 from unicodedata import decimal
 
 input = []
@@ -11,7 +12,7 @@ index_v = []
 print("______________________________________________")
 print("[INPUT]:")
 
-random.seed(14546744)
+random.seed(8964)
 
 
 for i in range(0,1024):
@@ -19,9 +20,10 @@ for i in range(0,1024):
     
     
 
-inputFile = open("input.txt","w")
+inputFile = open("ModelSim/input.txt","w")
 for x in input:
-    inputFile.write(str(x) + " \n")
+    bit = "{} {}".format(str(x), "\n")
+    inputFile.write(bit)
     print(x,end="")
 
 inputFile.close()
@@ -36,9 +38,10 @@ for i in range (0,1024):
     index_v.append(index)
 
 
-outputFile = open("output_py.txt","w")
+outputFile = open("ModelSim/output_py.txt","w")
 for x in output:
-    outputFile.write(str(x) + " \n")
+    bit = "{} {}".format(str(x), "\n")
+    outputFile.write(bit)
     print(x,end="")
 
 outputFile.close()
@@ -47,7 +50,7 @@ print("")
 print("______________________________________________")
 print("[INDEX]")
 
-indexFile = open("index_py.txt","w")
+indexFile = open("ModelSim/index_py.txt","w")
 i = 0
 for x in index_v:
     indexFile.write("input[" + str(x) + "]:" + str(input[x]) + "| output[" + str(i) + "]:" +str(output[i])+ "\n")
@@ -58,7 +61,26 @@ indexFile.close()
 
 print("")
 print("______________________________________________")
+print("[REUSLTS]")
 
+result = filecmp.cmp('ModelSim/output_py.txt', 'ModelSim/output_vhdl.txt')
 print("compere resuts: ", end="")
-print(filecmp.cmp('output_py.txt', '../../ModelSim/output_vhdl.txt'))
+print(result)
+
+if(not result):
+    output_py = open("ModelSim/output_py.txt", "r")
+    output_vhdl = open("ModelSim/output_vhdl.txt", "r")
+    for i in range(0,1024):
+        bit1 = output_py.readline().strip()
+        bit2 = output_vhdl.readline().strip()
+        
+        if(bit1 != bit2):
+            print("[line " + str(i) + "] -> (" + bit1 + ", " + bit2 +")")
+
+    output_py.close()
+    output_vhdl.close()
+
+print("________________________________________________")
+
+
 

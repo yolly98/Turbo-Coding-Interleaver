@@ -12,6 +12,7 @@ architecture beh of Interleaver_tb is
     file OUTPUT_FILE : text;
     
     constant T_CLK : time := 100 ns;
+    constant T_RESET : time := 25 ns;
     constant DEF_BIT : natural := 1024;
 
     signal x_tb : std_logic := '0';
@@ -32,7 +33,7 @@ architecture beh of Interleaver_tb is
 
     begin
         clk_tb <= ((not clk_tb) and end_sim ) after T_CLK/2;
-        rst_tb <= '1' after T_CLK;
+        rst_tb <= '1' after T_RESET;
         file_open(INPUT_FILE, "input.txt", read_mode);
         file_open(OUTPUT_FILE, "output_vhdl.txt", write_mode);
 
