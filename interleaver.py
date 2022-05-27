@@ -63,7 +63,7 @@ print("")
 print("______________________________________________")
 print("[REUSLTS]")
 
-print("compere resuts... ")
+print("compere results... ")
 
 output_py = open("ModelSim/output_py.txt", "r")
 output_vhdl = open("ModelSim/output_vhdl.txt", "r")
