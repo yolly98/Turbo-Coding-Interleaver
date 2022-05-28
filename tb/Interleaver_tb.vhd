@@ -14,6 +14,7 @@ architecture beh of Interleaver_tb is
     constant T_CLK : time := 100 ns;
     constant T_RESET : time := 25 ns;
     constant DEF_BIT : natural := 1024;
+    constant TX_CYCLES : natural := 4;
 
     signal x_tb : std_logic := '0';
     signal y_tb : std_logic;
@@ -35,9 +36,9 @@ architecture beh of Interleaver_tb is
     begin
         clk_tb <= ((not clk_tb) and end_sim ) after T_CLK/2;
         rst_tb <= '1' after T_RESET;
-        
-        file_open(INPUT_FILE, "input.txt", read_mode);
-        file_open(OUTPUT_FILE, "output_vhdl.txt", write_mode);
+
+        file_open(INPUT_FILE, "input0.txt", read_mode);
+        file_open(OUTPUT_FILE, "output_vhdl0.txt", write_mode);
 
         INTER: Interleaver
             port map(
@@ -52,37 +53,53 @@ architecture beh of Interleaver_tb is
             variable input_line : line;
             variable output_line : line;
             variable input_bit : std_logic;
+            variable m : natural := 0;
+            variable n : natural := 0;
 
             begin 
+
                 if(rst_tb = '0') then
                     t := 0;
                     x_tb <= '0';
                 else
                     if(rising_edge(clk_tb)) then
-                        --if( (t mod 2) = 0) then
-                        --    x_tb <= '0';
-                        --else
-                        --    x_tb <= '1';
-                        --end if;
+
                         if( endfile(INPUT_FILE)) then
+
+                            report "change input file";
+
+                            m := m + 1;
+                            if (m = TX_CYCLES) then
+                                m := 0;
+                            end if;
                             file_close(INPUT_FILE);
-                            file_open(INPUT_FILE, "input.txt", read_mode);
+                            file_open(INPUT_FILE, "input" & natural'image(m) & ".txt", read_mode);
                         end if;
+
                         readline(INPUT_FILE, input_line);
                         read(input_line, input_bit);
                         x_tb <= input_bit;
 
-                        if(t >= 1024 + 4) then
-                        write(output_line, y_tb);
-                        writeline(OUTPUT_FILE, output_line);
+                        if(t = (1024*2 + 4) + (1024 * n)) then
+
+                            report "change output file";
+                            n := n + 1;
+                            file_close(OUTPUT_FILE);
+                            file_open(OUTPUT_FILE, "output_vhdl" & natural'image(n) & ".txt", write_mode);
                         end if;
 
-                        if(t = 1024*2 + 4) then
+                        if(t >= 1024 + 4) then
+                            write(output_line, y_tb);
+                            writeline(OUTPUT_FILE, output_line);
+                        end if;
+
+                        if(n = TX_CYCLES) then
                             end_sim <= '0';
                             file_close(INPUT_FILE);
                             file_close(OUTPUT_FILE);
                         end if;
-                        t := t+1;
+
+                        t := t + 1;
                     end if;
                 end if;
         end process;
