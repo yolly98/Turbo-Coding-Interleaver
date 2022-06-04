@@ -6,8 +6,8 @@ entity Interleaver is
     port(
         clk : in std_logic;
         rst : in std_logic;
-        x : in std_logic;
-        y : out std_logic
+        x_in : in std_logic;
+        x_out : out std_logic
     );
 end Interleaver;
 
@@ -21,10 +21,11 @@ architecture rtl of Interleaver is
     signal j_mux : std_logic_vector(9 downto 0);
     signal out_mux : std_logic;
 
-    component DFC is
+    component DFF is
         port(
             clk : in std_logic;
             rst : in std_logic;
+            en : in std_logic;
             d : in std_logic;
             q : out std_logic
         );
@@ -61,27 +62,30 @@ architecture rtl of Interleaver is
 
     begin
 
-        R1: DFC 
+        R1: DFF 
             port map(
                 clk => clk,
                 rst => rst,
-                d => x,
+                en => '1',
+                d => x_in,
                 q => r1_out
             );
 
         SHIFT: for i in 0 to 1023 generate
             FIRST: if i = 0 generate
-                SR1: DFC port map(
+                SR1: DFF port map(
                     clk => clk,
                     rst => rst,
+                    en => '1',
                     d => r1_out,
                     q => q_s(1023-i)
                 );
                 end generate FIRST;
             INTERNAL:if i > 0 generate
-                SRI: DFC port map(
+                SRI: DFF port map(
                     clk => clk,
                     rst => rst,
+                    en => '1',
                     d => q_s(1023-(i-1)),
                     q => q_s(1023-i)
                 );
@@ -114,12 +118,13 @@ architecture rtl of Interleaver is
                 j => j_mux
             );
 
-        R3: DFC 
+        R3: DFF 
             port map(
                 clk => clk,
                 rst => rst,
+                en => '1',
                 d => out_mux,
-                q => y
+                q => x_out
             );
 
         r2_en <= count_out(0) and count_out(1) and count_out(2) and count_out(3) and count_out(4) and count_out(5) and count_out(6) and count_out(7) and count_out(8) and count_out(9);

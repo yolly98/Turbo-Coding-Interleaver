@@ -1,23 +1,26 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity DFC is
+entity DFF is
     port(
         clk : in std_logic;
         rst : in std_logic;
+        en  : in std_logic;
         d : in std_logic;
         q : out std_logic
     );
-end DFC;
+end DFF;
 
-architecture rtl of DFC is
+architecture rtl of DFF is
     begin
         dfc_p: process(rst, clk)
         begin
-            if rst = '0' then
+            if (rst = '0') then
                 q <= '0';
-            elsif (clk'event and clk = '1') then 
-                q <= d;
+            elsif (rising_edge(clk)) then 
+                if(en = '1') then
+                    q <= d;
+                end if;
             end if;
-        end process dfc_p;
+        end process;
 end rtl;

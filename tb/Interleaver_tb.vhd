@@ -16,8 +16,8 @@ architecture beh of Interleaver_tb is
     constant DEF_BIT : natural := 1024;
     constant TX_CYCLES : natural := 4;
 
-    signal x_tb : std_logic := '0';
-    signal y_tb : std_logic;
+    signal x_in_tb : std_logic := '0';
+    signal x_out_tb : std_logic;
     signal clk_tb : std_logic := '0';
     signal rst_tb : std_logic := '0';
     signal rst_tb_counter : std_logic := '0';
@@ -27,8 +27,8 @@ architecture beh of Interleaver_tb is
         port(
             clk : in std_logic;
             rst : in std_logic;
-            x : in std_logic;
-            y : out std_logic
+            x_in : in std_logic;
+            x_out : out std_logic
 
         );
     end component;
@@ -44,8 +44,8 @@ architecture beh of Interleaver_tb is
             port map(
                 clk => clk_tb,
                 rst => rst_tb,
-                x => x_tb,
-                y => y_tb
+                x_in => x_in_tb,
+                x_out => x_out_tb
             );
 
         stimuli : process(clk_tb)
@@ -60,7 +60,7 @@ architecture beh of Interleaver_tb is
 
                 if(rst_tb = '0') then
                     t := 0;
-                    x_tb <= '0';
+                    x_in_tb <= '0';
                 else
                     if(rising_edge(clk_tb)) then
 
@@ -78,7 +78,7 @@ architecture beh of Interleaver_tb is
 
                         readline(INPUT_FILE, input_line);
                         read(input_line, input_bit);
-                        x_tb <= input_bit;
+                        x_in_tb <= input_bit;
 
                         if(t = (1024*2 + 4) + (1024 * n)) then
 
@@ -89,7 +89,7 @@ architecture beh of Interleaver_tb is
                         end if;
 
                         if(t >= 1024 + 4) then
-                            write(output_line, y_tb);
+                            write(output_line, x_out_tb);
                             writeline(OUTPUT_FILE, output_line);
                         end if;
 
