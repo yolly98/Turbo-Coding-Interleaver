@@ -25,7 +25,6 @@ architecture rtl of Interleaver is
         port(
             clk : in std_logic;
             rst : in std_logic;
-            en : in std_logic;
             d : in std_logic;
             q : out std_logic
         );
@@ -66,7 +65,6 @@ architecture rtl of Interleaver is
             port map(
                 clk => clk,
                 rst => rst,
-                en => '1',
                 d => x_in,
                 q => r1_out
             );
@@ -76,7 +74,6 @@ architecture rtl of Interleaver is
                 SR1: DFF port map(
                     clk => clk,
                     rst => rst,
-                    en => '1',
                     d => r1_out,
                     q => q_s(1023-i)
                 );
@@ -85,7 +82,6 @@ architecture rtl of Interleaver is
                 SRI: DFF port map(
                     clk => clk,
                     rst => rst,
-                    en => '1',
                     d => q_s(1023-(i-1)),
                     q => q_s(1023-i)
                 );
@@ -122,7 +118,6 @@ architecture rtl of Interleaver is
             port map(
                 clk => clk,
                 rst => rst,
-                en => '1',
                 d => out_mux,
                 q => x_out
             );
