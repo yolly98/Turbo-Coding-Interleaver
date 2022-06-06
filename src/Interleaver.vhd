@@ -13,8 +13,7 @@ end Interleaver;
 
 architecture rtl of Interleaver is
 
-    signal r1_out : std_logic;
-    signal q_s : std_logic_vector(1023 downto 0);
+    signal r1_out : std_logic_vector(1023 downto 0);
     signal r2_out : std_logic_vector(1023 downto 0);
     signal r2_en : std_logic;
     signal count_out : std_logic_vector(9 downto 0);
@@ -61,29 +60,21 @@ architecture rtl of Interleaver is
 
     begin
 
-        R1: DFF 
-            port map(
-                clk => clk,
-                rst => rst,
-                d => x_in,
-                q => r1_out
-            );
-
         SHIFT: for i in 0 to 1023 generate
             FIRST: if i = 0 generate
                 SR1: DFF port map(
                     clk => clk,
                     rst => rst,
-                    d => r1_out,
-                    q => q_s(1023-i)
+                    d => x_in,
+                    q => r1_out(1023-i)
                 );
                 end generate FIRST;
             INTERNAL:if i > 0 generate
                 SRI: DFF port map(
                     clk => clk,
                     rst => rst,
-                    d => q_s(1023-(i-1)),
-                    q => q_s(1023-i)
+                    d => r1_out(1023-(i-1)),
+                    q => r1_out(1023-i)
                 );
                 end generate INTERNAL;
         end generate SHIFT;
@@ -94,7 +85,7 @@ architecture rtl of Interleaver is
                 clk => clk,
                 rst_n => rst,
                 en => r2_en,
-                d => q_s,
+                d => r1_out,
                 q => r2_out
             );
 

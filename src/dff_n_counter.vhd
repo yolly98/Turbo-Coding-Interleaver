@@ -19,8 +19,8 @@ architecture struct of dff_n_counter is
         begin 
             if (rst_n = '0') then
                 q <= (others => '1');
-                q(0) <= '1';
-                q(1) <= '0';
+                q(0) <= '0';
+                q(1) <= '1';
             elsif(rising_edge(clk)) then
                 if(en = '1') then
                     q <= d;

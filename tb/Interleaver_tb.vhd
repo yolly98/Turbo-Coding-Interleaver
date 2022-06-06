@@ -79,7 +79,7 @@ architecture beh of Interleaver_tb is
                         read(input_line, input_bit);
                         x_in_tb <= input_bit;
 
-                        if(t = (1024*2 + 4) + (1024 * n)) then
+                        if(t = (1024*2 + 3) + (1024 * n)) then
 
                             report "change output file";
                             n := n + 1;
@@ -87,7 +87,7 @@ architecture beh of Interleaver_tb is
                             file_open(OUTPUT_FILE, "output_vhdl" & natural'image(n) & ".txt", write_mode);
                         end if;
 
-                        if(t >= 1024 + 4) then
+                        if(t >= 1024 + 3) then
                             write(output_line, x_out_tb);
                             writeline(OUTPUT_FILE, output_line);
                         end if;
