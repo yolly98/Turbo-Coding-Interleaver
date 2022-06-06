@@ -20,7 +20,6 @@ architecture beh of Interleaver_tb is
     signal x_out_tb : std_logic;
     signal clk_tb : std_logic := '0';
     signal rst_tb : std_logic := '0';
-    signal rst_tb_counter : std_logic := '0';
     signal end_sim : std_logic := '1';
 
     component Interleaver is

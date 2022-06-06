@@ -8,7 +8,7 @@ architecture bhv of counter_tb is
 
     constant T_CLK : time := 10 ns;
     constant T_RST : time := 25 ns;
-    constant DEF_BIT : natural := 8;
+    constant DEF_BIT : natural := 10;
 
     signal clk_tb : std_logic := '0';
     signal rst_n : std_logic := '0';
@@ -47,7 +47,7 @@ architecture bhv of counter_tb is
                 if(rst_n = '0') then 
                     t := 0;
                 elsif (rising_edge(clk_tb)) then
-                    if(t = 100) then
+                    if(t = 1026) then
                         end_sim <= '0';
                     end if;
                     t := t+1;
