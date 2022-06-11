@@ -60,7 +60,7 @@ architecture rtl of Interleaver is
 
     begin
 
-        SHIFT: for i in 0 to 1023 generate
+        R1: for i in 0 to 1023 generate
             FIRST: if i = 0 generate
                 SR1: DFF port map(
                     clk => clk,
@@ -77,7 +77,7 @@ architecture rtl of Interleaver is
                     q => r1_out(1023-i)
                 );
                 end generate INTERNAL;
-        end generate SHIFT;
+        end generate R1;
 
         R2: dff_n
             generic map(N => 1024)
