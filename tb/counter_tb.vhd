@@ -12,7 +12,6 @@ architecture bhv of counter_tb is
 
     signal clk_tb : std_logic := '0';
     signal rst_n : std_logic := '0';
-    signal en_tb : std_logic := '1';
     signal q_tb : std_logic_vector(DEF_BIT-1 downto 0);
     signal end_sim : std_logic := '1';
 
@@ -22,7 +21,6 @@ architecture bhv of counter_tb is
         port(
             clk     : in std_logic;
             rst : in std_logic;
-            en      : in std_logic;
             q       : out std_logic_vector(Nbit - 1 downto 0)
         );
     end component;
@@ -36,7 +34,6 @@ architecture bhv of counter_tb is
             port map(
                 clk => clk_tb,
                 rst => rst_n,
-                en => en_tb,
                 q => q_tb
             );
 

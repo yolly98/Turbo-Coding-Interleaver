@@ -6,7 +6,6 @@ entity counter is
     port(
         clk : in std_logic;
         rst : in std_logic;
-        en : in std_logic;
         q : out std_logic_vector(Nbit-1 downto 0)
     );
 end counter;
@@ -27,7 +26,6 @@ architecture struct of counter is
             generic (N : positive :=Nbit);
             port(
                 clk : in std_logic;
-                en : in std_logic;
                 rst_n : in std_logic;
                 d : in std_logic_vector(N - 1 downto 0);
                 q : out std_logic_vector(N - 1 downto 0)
@@ -51,7 +49,6 @@ architecture struct of counter is
             port map(
                 clk => clk,
                 rst_n => rst,
-                en => en,
                 d => sum_s,
                 q => b_s
             );

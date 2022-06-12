@@ -45,7 +45,6 @@ architecture rtl of Interleaver is
         port(
             clk : in std_logic;
             rst : in std_logic;
-            en : in std_logic;
             q : out std_logic_vector(Nbit-1 downto 0)
         );
     end component;
@@ -94,7 +93,6 @@ architecture rtl of Interleaver is
             port map(
                 clk => clk,
                 rst => rst,
-                en => '1',
                 q => count_out 
             );
 
