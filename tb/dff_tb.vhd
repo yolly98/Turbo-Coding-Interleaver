@@ -4,7 +4,7 @@ use IEEE.std_logic_1164.all;
 entity dff_tb is
 end dff_tb;
 
-architecture bhv of dff_n_tb is
+architecture bhv of dff_tb is
 
     constant T_CLK : time := 100 ns;
     constant T_RST : time := 25 ns;
@@ -19,7 +19,7 @@ architecture bhv of dff_n_tb is
 
         port(
             clk     : in std_logic;
-            rst_n : in std_logic;
+            rst     : in std_logic;
             d       : in std_logic;
             q       : out std_logic
         );
@@ -32,7 +32,7 @@ architecture bhv of dff_n_tb is
         dff_1: DFF
             port map(
                 clk => clk_tb,
-                rst_n => rst_n,
+                rst => rst_n,
                 d => d_tb,
                 q => q_tb
             );
@@ -50,7 +50,10 @@ architecture bhv of dff_n_tb is
                             when 2 => d_tb <= '1';
                             when 3 => d_tb <= '0';
                             when 5 => d_tb <= '1';
-                            when 6 => d_tb <= '0';
+                            when 6 => d_tb <= '1';
+                            when 7 => d_tb <= '0';
+                            when 8 => d_tb <= '0';
+                            when 9 => d_tb <= '1';
                             when 10 => end_sim <= '0';
                             when others => null;
                     end case;

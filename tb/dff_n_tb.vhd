@@ -22,7 +22,7 @@ architecture bhv of dff_n_tb is
 
         port(
             clk     : in std_logic;
-            rst_n : in std_logic;
+            rst_n   : in std_logic;
             en      : in std_logic;
             d       : in std_logic_vector(N - 1 downto 0);
             q       : out std_logic_vector(N - 1 downto 0)
@@ -52,12 +52,15 @@ architecture bhv of dff_n_tb is
                     t := 0;
                 elsif (rising_edge(clk_tb)) then
                     case(t) is
-                            when 1 => d_tb <= "00000000";
-                            when 2 => d_tb <= "00000001";
-                            when 3 => d_tb <= "00000000";
+                            when 1 => d_tb <= "0000000000";
+                            when 2 => d_tb <= "0000000001";
+                            when 3 => d_tb <= "0000000000";
                             when 4 => en_tb <= '1';
-                            when 5 => d_tb <= "00000001";
-                            when 6 => d_tb <= "00000000";
+                            when 5 => d_tb <= "0000000001";
+                            when 6 => d_tb <= "0010010100";
+                            when 7 => d_tb <= "0110110001";
+                            when 8 => d_tb <= "0001010100";
+                            when 9 => d_tb <= "1000110011";
                             when 10 => end_sim <= '0';
                             when others => null;
                     end case;
