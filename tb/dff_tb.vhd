@@ -10,7 +10,7 @@ architecture bhv of dff_tb is
     constant T_RST : time := 25 ns;
 
     signal clk_tb : std_logic := '0';
-    signal rst_n : std_logic := '0';
+    signal rst_tb : std_logic := '0';
     signal d_tb : std_logic := '0';
     signal q_tb : std_logic;
     signal end_sim : std_logic := '1';
@@ -27,21 +27,21 @@ architecture bhv of dff_tb is
 
     begin
         clk_tb <= ((not clk_tb) and end_sim ) after T_CLK/2;
-        rst_n <= '1' after T_RST;
+        rst_tb <= '1' after T_RST;
 
         dff_1: DFF
             port map(
                 clk => clk_tb,
-                rst => rst_n,
+                rst => rst_tb,
                 d => d_tb,
                 q => q_tb
             );
 
-        stimuli: process(clk_tb,rst_n)
+        stimuli: process(clk_tb,rst_tb)
                 variable t : integer := 0;
 
             begin
-                if(rst_n = '0') then 
+                if(rst_tb = '0') then 
                     d_tb <= '0';
                     t := 0;
                 elsif (rising_edge(clk_tb)) then
