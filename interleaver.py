@@ -1,7 +1,5 @@
 from contextlib import nullcontext
-import filecmp
 import random
-import re
 from unicodedata import decimal
 
 input_vector = []
