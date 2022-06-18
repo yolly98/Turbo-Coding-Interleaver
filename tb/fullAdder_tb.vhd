@@ -24,10 +24,10 @@ architecture beh of full_adder_tb is
     signal cin_ext : std_logic := '0';
     signal s_ext : std_logic;
     signal cout_ext : std_logic;
-    signal testing : boolean :=true;
+    signal end_sim : boolean :=true;
 
     begin
-        clk <= not clk after clk_period/2 when testing else '0';
+        clk <= not clk after clk_period/2 when end_sim else '0';
         
         dut: full_adder
         port map(
@@ -43,35 +43,35 @@ architecture beh of full_adder_tb is
             a_ext <= '0';
             b_ext <= '0';
             cin_ext <= '0';
-            wait for 200 ns;
-            a_ext <= '1';
+            wait until rising_edge(clk);
+            a_ext <= '0';
             b_ext <= '0';
-            cin_ext <= '0';
+            cin_ext <= '1';
             wait until rising_edge(clk);
             a_ext <= '0';
             b_ext <= '1';
             cin_ext <= '0';
             wait until rising_edge(clk);
             a_ext 	 <= '0';
-            b_ext 	 <= '0';
-            cin_ext <= '0';
+            b_ext 	 <= '1';
+            cin_ext <= '1';
             wait until rising_edge(clk);
             a_ext 	 <= '1';
-            b_ext 	 <= '1';
+            b_ext 	 <= '0';
             cin_ext <= '0';
             wait until rising_edge(clk);
             a_ext 	 <= '1';
             b_ext 	 <= '0';
             cin_ext <= '1';
             wait until rising_edge(clk);
-            a_ext 	 <= '0';
+            a_ext 	 <= '1';
             b_ext 	 <= '1';
-            cin_ext <= '1';
+            cin_ext <= '0';
             wait until rising_edge(clk);
             a_ext 	 <= '1';
             b_ext 	 <= '1';
             cin_ext <= '1';
             wait for 500 ns;
-            testing  <= false;
+            end_sim  <= false;
         end process;
 end beh;
