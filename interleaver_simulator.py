@@ -11,7 +11,7 @@ TX_CYCLES = 4
 print("______________________________________________")
 print("[SEEDS]]:")
 
-random.seed(8964)
+random.seed(6146)
 
 for i in range(0,TX_CYCLES):
     seeds.append(random.randint(0,1000))
@@ -24,7 +24,7 @@ for s in range(0,TX_CYCLES) :
 
     print(f"----- INPUT {s} -----")
     input = []
-    random.seed(s)
+    random.seed(seeds[s])
     for i in range(0,1024):
         input.append(random.randint(0,1))
         
