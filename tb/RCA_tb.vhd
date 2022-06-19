@@ -28,10 +28,10 @@ architecture beh of RCA_tb is
     signal cin_ext : std_logic := '0';
     signal s_ext : std_logic_vector(N-1 downto 0);
     signal cout_ext : std_logic;
-    signal testing : boolean := true;
+    signal end_sim : boolean := true;
 
     begin 
-        clk <= not clk after clk_period/2 when testing else '0';
+        clk <= not clk after clk_period/2 when end_sim else '0';
 
         dut: RCA
             generic map ( Nbit => N)
@@ -69,7 +69,7 @@ architecture beh of RCA_tb is
                 b_ext <= "1111111111";
                 cin_ext <= '1';
                 wait until rising_edge(clk);
-                testing <= false;
+                end_sim <= false;
 	 end process;
 end beh;
 
