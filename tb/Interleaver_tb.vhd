@@ -36,9 +36,6 @@ architecture beh of Interleaver_tb is
         clk_tb <= ((not clk_tb) and end_sim ) after T_CLK/2;
         rst_tb <= '1' after T_RESET;
 
-        file_open(INPUT_FILE, "input0.txt", read_mode);
-        file_open(OUTPUT_FILE, "output_vhdl0.txt", write_mode);
-
         INTER: Interleaver
             port map(
                 clk => clk_tb,
@@ -55,9 +52,12 @@ architecture beh of Interleaver_tb is
             variable m : natural := 0;
             variable n : natural := 0;
 
+    
             begin 
 
                 if(rst_tb = '0') then
+                    file_open(INPUT_FILE, "input0.txt", read_mode);
+                    file_open(OUTPUT_FILE, "output_vhdl0.txt", write_mode);
                     t := 0;
                     x_in_tb <= '0';
                 else
