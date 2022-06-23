@@ -88,7 +88,7 @@ architecture rtl of Interleaver is
                 q => r2_out
             );
 
-        ACCUMOLATOR: counter
+        COUNTER: counter
             generic map(Nbit => 10)
             port map(
                 clk => clk,
